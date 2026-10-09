@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel | RAIV STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="adm">
+  <div id="status" class="msg" hidden></div>
+
+  <section id="login" class="card" hidden style="max-width:420px;margin:40px auto 0;padding:24px">
+    <h2>Panel privado RAIV STORE</h2>
+    <form id="lf">
+      <label for="em">Correo</label><input class="in" id="em" type="email" autocomplete="username" required>
+      <label for="pw">Contraseña</label><input class="in" id="pw" type="password" autocomplete="current-password" required>
+      <p id="lerr" style="color:#b0124a;margin:10px 0 0"></p>
+      <p><button class="btn-s pri" type="submit">Entrar</button></p>
+    </form>
+  </section>
+
+  <section id="app" hidden>
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2 style="margin:0">Mis productos</h2>
+      <div><button class="btn-s pri" id="newp" type="button">+ Nuevo producto</button>
+      <a class="btn-s" href="index.html" target="_blank" style="display:inline-block;text-decoration:none">Ver tienda</a>
+      <button class="btn-s" id="out" type="button">Salir</button></div>
+    </div>
+
+    <section id="formcard" class="card" hidden>
+      <h2 id="ftitle">Nuevo producto</h2>
+      <form id="pf">
+        <label for="f-name">Nombre</label><input class="in" id="f-name" maxlength="140" required>
+        <label for="f-desc">Descripción</label><textarea class="in" id="f-desc"></textarea>
+        <div class="row2">
+          <div><label for="f-cat">Categoría</label><select class="in" id="f-cat"></select></div>
+          <div><label for="f-status">Estado</label><select class="in" id="f-status">
+            <option value="published">Publicado (visible)</option><option value="hidden">Oculto</option><option value="draft">Borrador</option></select></div>
+        </div>
+        <div class="row2">
+          <div><label for="f-price">Precio (S/)</label><input class="in" id="f-price" type="number" step="0.01" min="0" inputmode="decimal" required></div>
+          <div><label for="f-stock">Cantidad disponible</label><input class="in" id="f-stock" type="number" step="1" min="0" inputmode="numeric" required></div>
+        </div>
+        <div class="row2">
+          <div><label for="f-wp">Precio mayorista (S/) — opcional</label><input class="in" id="f-wp" type="number" step="0.01" min="0" inputmode="decimal"></div>
+          <div><label for="f-wm">Mayorista desde (unidades) — opcional</label><input class="in" id="f-wm" type="number" step="1" min="1" inputmode="numeric"></div>
+        </div>
+        <label><input type="checkbox" id="f-feat"> Marcar como destacado</label>
+
+        <label>Fotos</label>
+        <input id="in-cam" type="file" accept="image/*" capture="environment" hidden>
+        <input id="in-gal" type="file" accept="image/*" multiple hidden>
+        <button class="btn-s" type="button" id="b-cam">📷 Tomar foto</button>
+        <button class="btn-s" type="button" id="b-gal">🖼️ Elegir de galería</button>
+        <div class="imgs" id="imgs"></div>
+
+        <p style="margin-top:18px"><button class="btn-s pri" id="save" type="submit">Guardar producto</button>
+        <button class="btn-s" type="button" id="cancel">Cancelar</button></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Categorías</h2>
+      <form id="cf" class="row2" style="align-items:end">
+        <div><label for="c-name" style="margin-top:0">Nueva categoría</label><input class="in" id="c-name" required></div>
+        <div><button class="btn-s" type="submit">Agregar categoría</button></div>
+      </form>
+    </section>
+
+    <section class="card"><div class="plist" id="plist"></div></section>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
