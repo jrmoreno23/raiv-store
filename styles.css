@@ -152,12 +152,17 @@ textarea.in{min-height:100px;resize:vertical}
   border-radius: 16px;
   margin-top: 1rem;
 }
-/* Centrar el copyright y hacer que la línea ocupe todo el ancho */
+/* Centrar el copyright y hacer que la línea ocupe todo el ancho del footer */
+footer {
+  display: grid;
+  grid-template-columns: 100%;
+}
+
 footer .copy {
-  grid-column: 1 / -1; /* Ocupa todas las columnas del grid */
+  grid-column: 1 / -1;
   width: 100%;
-  text-align: center;  /* Centra el texto en el medio */
+  text-align: center;
   margin-top: 2rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15); /* Línea divisoria de lado a lado */
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
