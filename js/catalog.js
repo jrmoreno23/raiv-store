@@ -48,14 +48,14 @@
     return el;
   }
 
-  function apply() {
+ function apply() {
     var qInput = document.getElementById('q');
     var q = qInput ? qInput.value.toLowerCase().trim() : '', n = 0;
     if (!grid) return;
 
     // Desplazar automáticamente hacia el catálogo cuando se empieza a escribir
     if (q.length > 0) {
-      var catSection = document.getElementById('catalogo') || grid;
+      var catSection = document.getElementById('catalogo') || grid.parentElement;
       if (catSection) {
         catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
