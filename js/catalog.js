@@ -52,10 +52,22 @@
     var qInput = document.getElementById('q');
     var q = qInput ? qInput.value.toLowerCase().trim() : '', n = 0;
     if (!grid) return;
+
+    // Desplazar automáticamente hacia el catálogo cuando se empieza a escribir
+    if (q.length > 0) {
+      var catSection = document.getElementById('catalogo') || grid;
+      if (catSection) {
+        catSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     grid.innerHTML = '';
     all.forEach(function (p) {
       var hay = (p.name + ' ' + (p.description || '') + ' ' + (p.category ? p.category.name : '')).toLowerCase();
-      if ((!q || hay.indexOf(q) > -1) && (!filt || (p.category && p.category.id === filt))) { grid.appendChild(card(p)); n++; }
+      if ((!q || hay.indexOf(q) > -1) && (!filt || (p.category && p.category.id === filt))) { 
+        grid.appendChild(card(p)); 
+        n++; 
+      }
     });
     if (empty) empty.style.display = n ? 'none' : 'block';
   }
