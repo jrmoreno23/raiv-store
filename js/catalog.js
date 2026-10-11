@@ -4,13 +4,25 @@
   var empty = document.getElementById('empty'), status = document.getElementById('status');
   var all = [], filt = '';
 
-  document.getElementById('sbtn').onclick = function () {
-    var b = document.getElementById('sbar'); b.classList.toggle('on');
-    if (b.classList.contains('on')) document.getElementById('q').focus();
-  };
+  // Abrir / cerrar barra de búsqueda y enfocar el input
+  var sbtn = document.getElementById('sbtn');
+  if (sbtn) {
+    sbtn.onclick = function () {
+      var b = document.getElementById('sbar'); 
+      if (b) {
+        b.classList.toggle('on');
+        if (b.classList.contains('on')) document.getElementById('q').focus();
+      }
+    };
+  }
+
+  // Menú móvil
   var nav = document.getElementById('nav');
-  document.getElementById('mbtn').onclick = function () { nav.classList.toggle('open'); };
-  nav.querySelectorAll('a').forEach(function (a) { a.onclick = function () { nav.classList.remove('open'); }; });
+  var mbtn = document.getElementById('mbtn');
+  if (mbtn && nav) {
+    mbtn.onclick = function () { nav.classList.toggle('open'); };
+    nav.querySelectorAll('a').forEach(function (a) { a.onclick = function () { nav.classList.remove('open'); }; });
+  }
 
   if (!R.ready) { R.notConfigured(status); return; }
 
@@ -37,17 +49,22 @@
   }
 
   function apply() {
-    var q = document.getElementById('q').value.toLowerCase().trim(), n = 0;
+    var qInput = document.getElementById('q');
+    var q = qInput ? qInput.value.toLowerCase().trim() : '', n = 0;
+    if (!grid) return;
     grid.innerHTML = '';
     all.forEach(function (p) {
-      var hay = (p.name + ' ' + p.description + ' ' + (p.category ? p.category.name : '')).toLowerCase();
+      var hay = (p.name + ' ' + (p.description || '') + ' ' + (p.category ? p.category.name : '')).toLowerCase();
       if ((!q || hay.indexOf(q) > -1) && (!filt || (p.category && p.category.id === filt))) { grid.appendChild(card(p)); n++; }
     });
-    empty.style.display = n ? 'none' : 'block';
+    if (empty) empty.style.display = n ? 'none' : 'block';
   }
-  document.getElementById('q').oninput = apply;
+
+  var searchQ = document.getElementById('q');
+  if (searchQ) searchQ.oninput = apply;
 
   function drawCats(list) {
+    if (!cats) return;
     cats.innerHTML = '';
     list.forEach(function (c) {
       var a = document.createElement('a');
@@ -64,9 +81,11 @@
   ]).then(function (r) {
     if (r[0].error || r[1].error) throw (r[0].error || r[1].error);
     all = r[1].data; drawCats(r[0].data); apply();
-    if (!all.length) { empty.textContent = 'Pronto verás aquí nuestros productos.'; }
+    if (!all.length && empty) { empty.textContent = 'Pronto verás aquí nuestros productos.'; }
   }).catch(function (e) {
-    status.hidden = false; status.className = 'msg err';
-    status.textContent = 'No se pudo cargar el catálogo: ' + (e.message || e);
+    if (status) {
+      status.hidden = false; status.className = 'msg err';
+      status.textContent = 'No se pudo cargar el catálogo: ' + (e.message || e);
+    }
   });
 })();
