@@ -70,25 +70,3 @@
     status.textContent = 'No se pudo cargar el catálogo: ' + (e.message || e);
   });
 })();
-// Filtro de búsqueda en tiempo real
-document.addEventListener('DOMContentLoaded', () => {
-  const searchInput = document.getElementById('q');
-
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      const products = document.querySelectorAll('.prod');
-
-      products.forEach((product) => {
-        const title = product.querySelector('h3')?.textContent.toLowerCase() || '';
-        const tag = product.querySelector('.tag')?.textContent.toLowerCase() || '';
-
-        if (title.includes(query) || tag.includes(query)) {
-          product.style.display = 'flex';
-        } else {
-          product.style.display = 'none';
-        }
-      });
-    });
-  }
-});
